@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12091d">
+
+<title>ForLookBeauty - Your Surprise Is Waiting</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #09050d;
+    color: white;
+    overflow: hidden;
+}
+
+button {
+    font: inherit;
+}
+
+.page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 620px;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(137, 68, 179, 0.22),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(204, 153, 54, 0.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #09050d,
+            #160b20 55%,
+            #08040c
+        );
+}
+
+.page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,.05) 0 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 75% 30%,
+            rgba(255,255,255,.04) 0 1px,
+            transparent 2px
+        );
+
+    background-size: 120px 120px, 180px 180px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   GOLD PARTICLES
+========================================= */
+
+.particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #f6d77a;
+
+    box-shadow:
+        0 0 12px #f6d77a;
+
+    opacity: 0;
+
+    animation:
+        floatUp linear infinite;
+}
+
+@keyframes floatUp {
+
+    0% {
+        transform:
+            translateY(30px)
+            scale(.5);
+
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .8;
+    }
+
+    80% {
+        opacity: .5;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            scale(1);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.brand {
+    position: absolute;
+
+    top: 25px;
+    left: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    z-index: 20;
+
+    letter-spacing: 3px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    color: #e8cf7a;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   SCREEN SYSTEM
+========================================= */
+
+.screen {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    padding: 70px 20px 30px;
+
+    text-align: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity .65s ease,
+        transform .65s ease,
+        visibility .65s;
+
+    z-index: 10;
+}
+
+.screen.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.small {
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    color: #d8bd67;
+
+    text-transform: uppercase;
+
+    margin-bottom: 15px;
+}
+
+.headline {
+    max-width: 650px;
+
+    font-size:
+        clamp(34px, 7vw, 66px);
+
+    line-height: 1.08;
+
+    font-weight: 400;
+
+    color: #fff;
+}
+
+.subtext {
+    max-width: 520px;
+
+    margin-top: 18px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    color:
+        rgba(255,255,255,.72);
+}
+
+.gold {
+    color: #e9cc72;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn {
+    margin-top: 32px;
+
+    border:
+        1px solid rgba(232,207,122,.65);
+
+    border-radius: 999px;
+
+    padding:
+        13px 26px;
+
+    color: #20140a;
+
+    background:
+        linear-gradient(
+            110deg,
+            #c99c35,
+            #fff0a2,
+            #c69a32
+        );
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    letter-spacing: .5px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(224,184,75,.16);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 38px
+        rgba(224,184,75,.32);
+}
+
+.btn.secondary {
+    color: #f4df91;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border-color:
+        rgba(232,207,122,.4);
+}
+
+.buttons {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+}
+
+
+/* =========================================
+   GIFT BOX
+========================================= */
+
+.gift-wrap {
+    position: relative;
+
+    width: 250px;
+    height: 230px;
+
+    margin:
+        10px auto 15px;
+
+    perspective: 800px;
+}
+
+.gift-box {
+    position: absolute;
+
+    left: 50%;
+    bottom: 20px;
+
+    width: 180px;
+    height: 120px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            135deg,
+            #5f257c,
+            #341044
+        );
+
+    border:
+        1px solid rgba(232,207,122,.35);
+
+    border-radius:
+        5px 5px 12px 12px;
+
+    box-shadow:
+        0 25px 55px rgba(0,0,0,.5),
+        inset 0 0 25px
+        rgba(255,255,255,.04);
+}
+
+.gift-box::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 20px;
+    height: 100%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            #b8882c,
+            #f3dc83,
+            #b8882c
+        );
+
+    opacity: .9;
+}
+
+.gift-lid {
+    position: absolute;
+
+    left: 50%;
+    bottom: 125px;
+
+    width: 205px;
+    height: 38px;
+
+    transform:
+        translateX(-50%);
+
+    transform-origin:
+        left bottom;
+
+    background:
+        linear-gradient(
+            135deg,
+            #70318e,
+            #3d1250
+        );
+
+    border:
+        1px solid
+        rgba(232,207,122,.45);
+
+    border-radius: 7px;
+
+    box-shadow:
+        0 12px 25px
+        rgba(0,0,0,.35);
+
+    transition:
+        transform 1s
+        cubic-bezier(.2,.8,.2,1);
+
+    z-index: 4;
+}
+
+.gift-lid::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 0;
+
+    width: 20px;
+    height: 100%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            #b8882c,
+            #f3dc83,
+            #b8882c
+        );
+}
+
+.ribbon {
+    position: absolute;
+
+    left: 50%;
+    bottom: 144px;
+
+    width: 24px;
+    height: 35px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            #b8882c,
+            #f3dc83,
+            #b8882c
+        );
+
+    z-index: 6;
+
+    transition:
+        transform .8s ease,
+        opacity .4s ease;
+}
+
+.bow {
+    position: absolute;
+
+    left: 50%;
+    bottom: 166px;
+
+    width: 70px;
+    height: 35px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 7;
+
+    transition:
+        transform .8s ease,
+        opacity .4s ease;
+}
+
+.bow::before,
+.bow::after {
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+
+    width: 40px;
+    height: 25px;
+
+    border:
+        6px solid #e7c968;
+
+    background: transparent;
+}
+
+.bow::before {
+    right: 35px;
+
+    border-radius:
+        50% 10% 50% 50%;
+
+    transform:
+        rotate(20deg);
+}
+
+.bow::after {
+    left: 35px;
+
+    border-radius:
+        10% 50% 50% 50%;
+
+    transform:
+        rotate(-20deg);
+}
+
+.gift-wrap.open .gift-lid {
+    transform:
+        translateX(-50%)
+        rotate(-28deg)
+        translateY(-20px);
+}
+
+.gift-wrap.open .ribbon,
+.gift-wrap.open .bow {
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        translateY(-35px);
+}
+
+
+/* =========================================
+   JEWELLERY
+========================================= */
+
+.jewellery {
+    position: absolute;
+
+    left: 50%;
+    bottom: 65px;
+
+    width: 120px;
+    height: 105px;
+
+    transform:
+        translateX(-50%)
+        translateY(25px)
+        scale(.65);
+
+    opacity: 0;
+
+    transition:
+        opacity .9s ease,
+        transform 1s
+        cubic-bezier(.2,.9,.2,1);
+
+    z-index: 2;
+}
+
+.gift-wrap.open .jewellery {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(-25px)
+        scale(1);
+}
+
+.chain-left,
+.chain-right {
+    position: absolute;
+
+    top: 0;
+
+    width: 70px;
+    height: 78px;
+
+    border:
+        2px solid #e8c967;
+
+    border-bottom-color:
+        transparent;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 12px
+        rgba(232,201,103,.55);
+}
+
+.chain-left {
+    left: -2px;
+
+    transform:
+        rotate(23deg);
+}
+
+.chain-right {
+    right: -2px;
+
+    transform:
+        rotate(-23deg);
+}
+
+.pendant {
+    position: absolute;
+
+    left: 50%;
+    top: 56px;
+
+    width: 34px;
+    height: 34px;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff5b8,
+            #d2a735 55%,
+            #fff1a0
+        );
+
+    box-shadow:
+        0 0 12px #e7c967,
+        0 0 30px
+        rgba(231,201,103,.65);
+}
+
+.pendant::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.7);
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.message-card {
+    max-width: 650px;
+
+    padding:
+        28px 25px;
+
+    border:
+        1px solid
+        rgba(232,207,122,.25);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.35);
+
+    backdrop-filter:
+        blur(10px);
+}
+
+.quote {
+    font-size:
+        clamp(25px, 5vw, 44px);
+
+    line-height: 1.25;
+
+    color: #fff;
+
+    font-weight: 400;
+}
+
+.cursor {
+    display: inline-block;
+
+    width: 2px;
+    height: .9em;
+
+    margin-left: 4px;
+
+    vertical-align: -2px;
+
+    background: #e9cc72;
+
+    animation:
+        blink .7s infinite;
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================================
+   PRODUCT
+========================================= */
+
+.product-box {
+    width:
+        min(380px, 90vw);
+
+    padding: 25px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(232,207,122,.22);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.35);
+}
+
+.product-visual {
+    height: 190px;
+
+    border-radius: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(232,207,122,.15),
+            transparent 55%
+        ),
+        #130b1b;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.product-visual::before {
+    content: "YOUR JEWELLERY";
+
+    position: absolute;
+
+    color:
+        rgba(255,255,255,.18);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+}
+
+.product-ring {
+    position: relative;
+
+    width: 85px;
+    height: 85px;
+
+    border:
+        8px solid #d8b74f;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 25px
+        rgba(230,199,99,.45);
+
+    z-index: 2;
+}
+
+.product-ring::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: -28px;
+
+    width: 25px;
+    height: 25px;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffbd0,
+            #e5c75f
+        );
+
+    box-shadow:
+        0 0 18px #f1d978;
+}
+
+.product-name {
+    margin-top: 18px;
+
+    font-size: 21px;
+
+    color: #f1d986;
+}
+
+.product-copy {
+    margin-top: 8px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    color:
+        rgba(255,255,255,.65);
+}
+
+
+/* =========================================
+   SHARE
+========================================= */
+
+.share-note {
+    margin-top: 18px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 12px;
+
+    color:
+        rgba(255,255,255,.55);
+}
+
+.heart {
+    display: inline-block;
+
+    color: #d993b9;
+
+    animation:
+        tinyFloat 2s ease-in-out infinite;
+}
+
+@keyframes tinyFloat {
+
+    50% {
+        transform:
+            translateY(-4px);
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .page {
+        min-height: 100svh;
+    }
+
+    .brand {
+        top: 20px;
+        font-size: 12px;
+    }
+
+    .screen {
+        padding-top: 60px;
+    }
+
+    .gift-wrap {
+        transform: scale(.88);
+
+        margin-top: -5px;
+        margin-bottom: -5px;
+    }
+
+    .subtext {
+        font-size: 14px;
+    }
+
+    .message-card {
+        padding:
+            24px 18px;
+    }
+
+    .product-box {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="page" id="page">
+
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+
+    <!-- Brand -->
+    <div class="brand">
+        ForLookBeauty
+    </div>
+
+
+    <!-- =====================================
+         SCREEN 1
+    ====================================== -->
+
+    <section class="screen active" id="screen1">
+
+        <div class="small">
+            A little surprise for you
+        </div>
+
+        <h1 class="headline">
+            Hey… <span class="gold">wait.</span> ✨
+        </h1>
+
+        <p class="subtext">
+            Someone chose something special for you.
+            But before you see it… we have a tiny surprise.
+        </p>
+
+        <button class="btn" id="startBtn">
+            Open Your Surprise 🎁
+        </button>
+
+    </section>
+
+
+    <!-- =====================================
+         SCREEN 2
+    ====================================== -->
+
+    <section class="screen" id="screen2">
+
+        <div class="gift-wrap" id="giftWrap">
+
+            <!-- Jewellery -->
+            <div class="jewellery">
+
+                <div class="chain-left"></div>
+
+                <div class="chain-right"></div>
+
+                <div class="pendant"></div>
+
+            </div>
+
+
+            <!-- Gift -->
+            <div class="gift-box"></div>
+
+            <div class="gift-lid"></div>
+
+            <div class="ribbon"></div>
+
+            <div class="bow"></div>
+
+        </div>
+
+
+        <div class="small">
+            For someone special
+        </div>
+
+
+        <h2 class="headline">
+
+            Something beautiful<br>
+
+            is waiting for you.
+
+        </h2>
+
+
+        <p class="subtext">
+
+            Because ordinary gifts are easy to forget…
+            but the feeling behind them isn't.
+
+        </p>
+
+
+        <button class="btn" id="openBtn">
+            Open The Box ✨
+        </button>
+
+    </section>
+
+
+    <!-- =====================================
+         SCREEN 3
+    ====================================== -->
+
+    <section class="screen" id="screen3">
+
+        <div class="message-card">
+
+            <div class="small">
+                A little reminder
+            </div>
+
+            <div class="quote" id="quote"></div>
+
+            <span class="cursor"></span>
+
+        </div>
+
+
+        <button class="btn" id="continueBtn">
+            One More Thing 💜
+        </button>
+
+    </section>
+
+
+    <!-- =====================================
+         SCREEN 4
+    ====================================== -->
+
+    <section class="screen" id="screen4">
+
+        <div class="product-box">
+
+            <div class="product-visual">
+
+                <div class="product-ring"></div>
+
+            </div>
+
+
+            <div class="product-name">
+
+                Made to make you sparkle ✨
+
+            </div>
+
+
+            <div class="product-copy">
+
+                Discover beautiful pieces from
+                ForLookBeauty — jewellery made for
+                your moments, your people, and your story.
+
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button class="btn" id="shopBtn">
+
+                Shop Now ✨
+
+            </button>
+
+
+            <button
+                class="btn secondary"
+                id="shareBtn">
+
+                Send This Surprise 💌
+
+            </button>
+
+        </div>
+
+
+        <div class="share-note">
+
+            A little sparkle.
+            A lot of love.
+
+            <span class="heart">
+                ♥
+            </span>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   CREATE GOLD PARTICLES
+========================================= */
+
+const particles =
+    document.getElementById("particles");
+
+
+for (let i = 0; i < 45; i++) {
+
+    const particle =
+        document.createElement("span");
+
+    particle.className =
+        "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.top =
+        (55 + Math.random() * 50) + "%";
+
+    particle.style.animationDuration =
+        (5 + Math.random() * 8) + "s";
+
+    particle.style.animationDelay =
+        (Math.random() * 7) + "s";
+
+    particle.style.transform =
+        "scale(" +
+        (0.5 + Math.random()) +
+        ")";
+
+    particles.appendChild(particle);
+}
+
+
+/* =========================================
+   SCREEN SYSTEM
+========================================= */
+
+const screens = [
+
+    document.getElementById("screen1"),
+
+    document.getElementById("screen2"),
+
+    document.getElementById("screen3"),
+
+    document.getElementById("screen4")
+
+];
+
+
+function showScreen(number) {
+
+    screens.forEach(
+        function(screen, index) {
+
+            screen.classList.toggle(
+                "active",
+                index === number - 1
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   FIRST BUTTON
+========================================= */
+
+document
+    .getElementById("startBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            showScreen(2);
+
+        }
+    );
+
+
+/* =========================================
+   OPEN GIFT
+========================================= */
+
+const giftWrap =
+    document.getElementById("giftWrap");
+
+
+document
+    .getElementById("openBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            giftWrap.classList.add("open");
+
+            const button = this;
+
+            button.disabled = true;
+
+            button.textContent =
+                "Opening... ✨";
+
+
+            setTimeout(
+                function() {
+
+                    showScreen(3);
+
+                    typeMessage();
+
+                },
+                1700
+            );
+
+        }
+    );
+
+
+/* =========================================
+   TYPEWRITER
+========================================= */
+
+const quoteText =
+    "You deserve beautiful things… and beautiful moments.";
+
+const quote =
+    document.getElementById("quote");
+
+let typingStarted = false;
+
+
+function typeMessage() {
+
+    if (typingStarted) {
+        return;
+    }
+
+    typingStarted = true;
+
+    quote.textContent = "";
+
+    let index = 0;
+
+
+    const timer =
+        setInterval(
+            function() {
+
+                quote.textContent +=
+                    quoteText.charAt(index);
+
+                index++;
+
+
+                if (
+                    index >=
+                    quoteText.length
+                ) {
+
+                    clearInterval(timer);
+
+                }
+
+            },
+            55
+        );
+
+}
+
+
+/* =========================================
+   CONTINUE
+========================================= */
+
+document
+    .getElementById("continueBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            showScreen(4);
+
+        }
+    );
+
+
+/* =========================================
+   SHOP NOW
+========================================= */
+
+document
+    .getElementById("shopBtn")
+    .addEventListener(
+        "click",
+        function() {
+
+            /*
+             * Yahan apni actual website
+             * ka link daal sakti ho.
+             */
+
+            const shopUrl =
+                "https://www.forlookbeauty.com";
+
+            window.open(
+                shopUrl,
+                "_blank"
+            );
+
+        }
+    );
+
+
+/* =========================================
+   SHARE BUTTON
+========================================= */
+
+document
+    .getElementById("shareBtn")
+    .addEventListener(
+        "click",
+        async function() {
+
+            const shareData = {
+
+                title:
+                    "A Little Surprise For You 💜",
+
+                text:
+                    "Someone sent you a little sparkle from ForLookBeauty ✨",
+
+                url:
+                    window.location.href
+
+            };
+
+
+            try {
+
+                if (navigator.share) {
+
+                    await navigator.share(
+                        shareData
+                    );
+
+                } else {
+
+                    await navigator.clipboard.writeText(
+                        window.location.href
+                    );
+
+                    alert(
+                        "Surprise link copied! 💜 Send it to someone special."
+                    );
+
+                }
+
+            } catch (error) {
+
+                if (
+                    error.name !==
+                    "AbortError"
+                ) {
+
+                    alert(
+                        "Copy this page link and send it to someone special 💜"
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

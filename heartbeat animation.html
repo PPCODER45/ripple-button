@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>I Love You - Heart Animation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .main {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Heading */
+        h1 {
+            position: absolute;
+            top: 50px;
+            color: white;
+            font-size: 45px;
+            letter-spacing: 2px;
+            z-index: 10;
+        }
+
+        /* Heart area */
+        #heart {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+
+        /* Every I love you */
+        .love {
+            position: absolute;
+
+            color: #ff8dcc;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            white-space: nowrap;
+
+            text-shadow:
+                0 0 5px #ff69b4,
+                0 0 10px #ff69b4,
+                0 0 15px #ff1493;
+
+            opacity: 0;
+
+            transform-origin: center;
+        }
+
+        /* Appear animation */
+        .show {
+            animation: appear 0.15s linear forwards;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            h1 {
+                top: 30px;
+                font-size: 32px;
+            }
+
+            #heart {
+                width: 380px;
+                height: 380px;
+            }
+
+            .love {
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+
+        <h1>Heart Animation</h1>
+
+        <div id="heart"></div>
+
+    </div>
+
+
+    <script>
+
+        const heart = document.getElementById("heart");
+
+
+        /*
+        ==========================================
+        SETTINGS
+        ==========================================
+        */
+
+        const totalItems = 350;
+
+        // Animation ki speed
+        const speed = 15;
+
+        // Heart ka size
+        const scale = 15;
+
+
+        /*
+        ==========================================
+        CREATE HEART POINTS
+        ==========================================
+        */
+
+        let points = [];
+
+
+        for (let i = 0; i < totalItems; i++) {
+
+            /*
+                0 se 2PI tak angle
+            */
+
+            const t =
+                (Math.PI * 2 * i) /
+                totalItems;
+
+
+            /*
+                Heart Formula
+
+                x = 16 sin³(t)
+
+                y = 13cos(t)
+                    -5cos(2t)
+                    -2cos(3t)
+                    -cos(4t)
+            */
+
+            const x =
+                16 *
+                Math.pow(Math.sin(t), 3);
+
+
+            const y =
+                13 * Math.cos(t)
+                - 5 * Math.cos(2 * t)
+                - 2 * Math.cos(3 * t)
+                - Math.cos(4 * t);
+
+
+            /*
+                Convert to screen position
+            */
+
+            const posX =
+                x * scale;
+
+
+            const posY =
+                -y * scale;
+
+
+            /*
+                Heart ki direction
+            */
+
+            const nextT =
+                (Math.PI * 2 * (i + 1)) /
+                totalItems;
+
+
+            const nextX =
+                16 *
+                Math.pow(Math.sin(nextT), 3);
+
+
+            const nextY =
+                13 * Math.cos(nextT)
+                - 5 * Math.cos(2 * nextT)
+                - 2 * Math.cos(3 * nextT)
+                - Math.cos(4 * nextT);
+
+
+            const rotation =
+                Math.atan2(
+                    -(nextY - y),
+                    nextX - x
+                ) *
+                180 /
+                Math.PI;
+
+
+            points.push({
+                x: posX,
+                y: posY,
+                rotation: rotation
+            });
+        }
+
+
+        /*
+        ==========================================
+        DRAW HEART
+        ==========================================
+        */
+
+        function drawHeart() {
+
+            /*
+                Purana heart remove karo
+            */
+
+            heart.innerHTML = "";
+
+
+            /*
+                Center position
+            */
+
+            const centerX =
+                heart.offsetWidth / 2;
+
+
+            const centerY =
+                heart.offsetHeight / 2;
+
+
+            /*
+                Ek-ek karke I love you add hoga
+            */
+
+            points.forEach((point, index) => {
+
+                setTimeout(() => {
+
+                    const love =
+                        document.createElement("div");
+
+
+                    love.className = "love";
+
+
+                    love.innerText =
+                        "I love you";
+
+
+                    /*
+                        Position
+                    */
+
+                    love.style.left =
+                        centerX + point.x + "px";
+
+
+                    love.style.top =
+                        centerY + point.y + "px";
+
+
+                    /*
+                        Text ko heart ki direction mein rotate karo
+                    */
+
+                    love.style.transform =
+                        `translate(-50%, -50%)
+                         rotate(${point.rotation}deg)`;
+
+
+                    /*
+                        Screen par show karo
+                    */
+
+                    heart.appendChild(love);
+
+
+                    /*
+                        Small delay ke baad visible
+                    */
+
+                    requestAnimationFrame(() => {
+
+                        love.classList.add("show");
+
+                    });
+
+                }, index * speed);
+
+            });
+
+
+            /*
+                Complete heart hone ke baad
+                thodi der wait karo
+                phir dobara draw karo
+            */
+
+            const totalTime =
+                totalItems * speed;
+
+
+            setTimeout(() => {
+
+                drawHeart();
+
+            }, totalTime + 2500);
+
+        }
+
+
+        /*
+        ==========================================
+        START
+        ==========================================
+        */
+
+        drawHeart();
+
+    </script>
+
+</body>
+</html>

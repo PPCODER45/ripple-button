@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Heart Animation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Heading */
+        .title {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 45px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        /* Heart Area */
+        .heart-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Individual I love you text */
+        .love {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+
+            width: 120px;
+            height: 25px;
+
+            transform-origin: 0 0;
+
+            animation: heartMove 4s ease-in-out infinite;
+            animation-delay: calc(var(--i) * -0.03s);
+        }
+
+        .love_horizontal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .love_vertical {
+            width: 100%;
+            height: 100%;
+        }
+
+        .love_word {
+            color: #ff8dcc;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+
+            text-shadow:
+                0 0 5px #ff4da6,
+                0 0 10px #ff4da6,
+                0 0 20px #ff4da6,
+                0 0 30px #ff1493;
+
+            transform: translateY(-50%);
+        }
+
+        /* Heart animation */
+        @keyframes heartMove {
+
+            0% {
+                opacity: 0.3;
+                filter: blur(1px);
+            }
+
+            50% {
+                opacity: 1;
+                filter: blur(0);
+            }
+
+            100% {
+                opacity: 0.3;
+                filter: blur(1px);
+            }
+        }
+
+        /* Center glow */
+        .glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+
+            background: radial-gradient(
+                circle,
+                rgba(255, 20, 147, 0.15),
+                transparent 70%
+            );
+
+            border-radius: 50%;
+            animation: glowPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes glowPulse {
+
+            0%, 100% {
+                transform: scale(0.8);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            .title {
+                font-size: 32px;
+                top: 35px;
+            }
+
+            .heart-container {
+                width: 380px;
+                height: 380px;
+            }
+
+            .love_word {
+                font-size: 9px;
+            }
+
+            .love {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="title">
+            Heart Animation
+        </div>
+
+        <div class="heart-container" id="heart">
+
+            <div class="glow"></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const heart = document.getElementById("heart");
+
+        /*
+            Number of "I love you" texts
+        */
+        const totalItems = 180;
+
+
+        /*
+            Create heart particles
+        */
+        for (let i = 0; i < totalItems; i++) {
+
+            const love = document.createElement("div");
+
+            love.className = "love";
+
+            love.style.setProperty("--i", i);
+
+
+            /*
+                Calculate angle
+            */
+            const angle = (Math.PI * 2 * i) / totalItems;
+
+
+            /*
+                Heart equation
+
+                x = 16 sin³(t)
+
+                y = 13 cos(t)
+                   - 5 cos(2t)
+                   - 2 cos(3t)
+                   - cos(4t)
+            */
+
+            const x =
+                16 * Math.pow(Math.sin(angle), 3);
+
+            const y =
+                13 * Math.cos(angle)
+                - 5 * Math.cos(2 * angle)
+                - 2 * Math.cos(3 * angle)
+                - Math.cos(4 * angle);
+
+
+            /*
+                Scale heart
+            */
+
+            const scale = 16;
+
+
+            const posX = x * scale;
+
+            const posY = -y * scale;
+
+
+            /*
+                Direction of text
+            */
+
+            const rotation =
+                Math.atan2(y, x) * (180 / Math.PI);
+
+
+            /*
+                Apply position
+            */
+
+            love.style.transform =
+                `translate(${posX}px, ${posY}px)
+                 rotate(${rotation}deg)`;
+
+
+            /*
+                Different pink shades
+            */
+
+            const opacity =
+                0.5 + Math.random() * 0.5;
+
+            love.style.opacity = opacity;
+
+
+            /*
+                Text
+            */
+
+            love.innerHTML = `
+                <div class="love_horizontal">
+                    <div class="love_vertical">
+                        <div class="love_word">
+                            I love you
+                        </div>
+                    </div>
+                </div>
+            `;
+
+
+            /*
+                Add to heart
+            */
+
+            heart.appendChild(love);
+        }
+
+
+        /*
+            Small floating animation
+        */
+
+        let pulse = 1;
+
+        setInterval(() => {
+
+            pulse += 0.01;
+
+            if (pulse > 1.08) {
+                pulse = 1;
+            }
+
+            heart.style.transform =
+                `scale(${pulse})`;
+
+        }, 30);
+
+    </script>
+
+</body>
+</html>
