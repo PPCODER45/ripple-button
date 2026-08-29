@@ -1119,7 +1119,7 @@ button {
                 class="btn secondary"
                 id="shareBtn">
 
-                Send This Surprise 💌
+                Claim Your Surprise 💌
 
             </button>
 
@@ -1364,69 +1364,24 @@ document
     );
 
 
-/* =========================================
-   SHARE BUTTON
-========================================= */
+<!-- =========================================
+     CLAIM YOUR GIFT BUTTON
+========================================= -->
+
+<script>
 
 document
     .getElementById("shareBtn")
     .addEventListener(
         "click",
-        async function() {
+        function() {
 
-            const shareData = {
-
-                title:
-                    "A Little Surprise For You 💜",
-
-                text:
-                    "Someone sent you a little sparkle from ForLookBeauty ✨",
-
-                url:
-                    window.location.href
-
-            };
-
-
-            try {
-
-                if (navigator.share) {
-
-                    await navigator.share(
-                        shareData
-                    );
-
-                } else {
-
-                    await navigator.clipboard.writeText(
-                        window.location.href
-                    );
-
-                    alert(
-                        "Surprise link copied! 💜 Send it to someone special."
-                    );
-
-                }
-
-            } catch (error) {
-
-                if (
-                    error.name !==
-                    "AbortError"
-                ) {
-
-                    alert(
-                        "Copy this page link and send it to someone special 💜"
-                    );
-
-                }
-
-            }
+            window.location.href =
+                "https://www.forlookbeauty.com/product-page/clam-your-free-review-gift";
 
         }
     );
 
 </script>
-
 </body>
 </html>
